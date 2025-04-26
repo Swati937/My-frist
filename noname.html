@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign-Up Form</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: #f4f6f8;
+    }
+
+    .container {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.7rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    input:invalid {
+      border-color: red;
+    }
+
+    .error {
+      color: red;
+      font-size: 0.85rem;
+      margin-top: 0.25rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.8rem;
+      background-color: #007bff;
+      border: none;
+      color: white;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Sign Up</h2>
+    <form id="signupForm" novalidate>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" required />
+        <div class="error" id="usernameError"></div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" required />
+        <div class="error" id="emailError"></div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" required minlength="6" />
+        <div class="error" id="passwordError"></div>
+      </div>
+      <button type="submit">Register</button>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('signupForm');
+    const username = document.getElementById('username');
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault(); // Stop form submission
+
+      let isValid = true;
+
+      // Username validation
+      if (username.value.trim() === '') {
+        setError('usernameError', 'Username is required');
+        isValid = false;
+      } else {
+        setError('usernameError', '');
+      }
+
+      // Email validation
+      if (!validateEmail(email.value)) {
+        setError('emailError', 'Invalid email format');
+        isValid = false;
+      } else {
+        setError('emailError', '');
+      }
+
+      // Password validation
+      if (password.value.length < 6) {
+        setError('passwordError', 'Password must be at least 6 characters');
+        isValid = false;
+      } else {
+        setError('passwordError', '');
+      }
+
+      if (isValid) {
+        alert('Form submitted successfully!');
+        form.reset();
+      }
+    });
+
+    function setError(id, message) {
+      document.getElementById(id).textContent = message;
+    }
+
+    function validateEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(email.toLowerCase());
+    }
+  </script>
+</body>
+</html>
